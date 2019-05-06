@@ -1,0 +1,28 @@
+<?php
+/**
+ * Global PDO Database Connection
+ * @author Emmanuel Ketcha Bepa
+ * @since 06.05.2019
+ */
+
+class database
+{
+    private static $db;
+    private static $host;
+    private static $servername;
+    private static $username;
+    private static $password;
+
+    static public function getInstance($host, $servername, $username, $password) {
+        self::$host       = $host;
+        self::$servername = $servername;
+        self::$username   = $username;
+        self::$password   = $password;
+
+        if(!self::$db) {
+            $opt = array(\PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+            self::$db = new PDO('mysql:host=' . $host . ';dbname=' . $servername, $username, $password, $opt);
+        }
+        return self::$db;
+    }
+}
